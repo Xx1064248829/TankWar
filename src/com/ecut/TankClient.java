@@ -8,16 +8,13 @@ public class TankClient extends Frame{
     public static final int GAME_WIDTH=1200;         //将游戏窗口的宽度和高度定义为常量，方便修改窗口大小
     public static final int GAME_HEIGNT=800;
 
-    int x=50,y=50;
+    Tank myTank= new Tank(50,50);
 
     Image offScreenImage = null;
 
 
     public void paint(Graphics g) {            //重写Paint方法画出自己的坦克
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x,y,30,30);
-        g.setColor(c);
+        myTank.draw(g);
     }
 
     public void update(Graphics g){
@@ -74,21 +71,7 @@ public class TankClient extends Frame{
 
     private class KeyMonitor extends KeyAdapter{            //添加键盘的监听器
         public void keyPressed(KeyEvent e) {
-            int key=e.getKeyCode();
-            switch(key){
-                case KeyEvent.VK_RIGHT :
-                    x+=5;
-                    break;
-                case KeyEvent.VK_LEFT :
-                    x-=5;
-                    break;
-                case KeyEvent.VK_UP :
-                    y-=5;
-                    break;
-                case KeyEvent.VK_DOWN :
-                    y+=5;
-                    break;
-            }
+            myTank.keyPressed(e);
         }
     }
 
