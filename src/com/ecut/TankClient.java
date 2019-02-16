@@ -8,12 +8,14 @@ public class TankClient extends Frame{
     public static final int GAME_WIDTH=1200;         //将游戏窗口的宽度和高度定义为常量，方便修改窗口大小
     public static final int GAME_HEIGNT=800;
 
-    Tank myTank= new Tank(50,50);
+    Tank myTank= new Tank(50,50,this);
+    Missile m =null;
 
     Image offScreenImage = null;
 
 
     public void paint(Graphics g) {            //重写Paint方法画出自己的坦克
+        if(m!=null) m.draw(g);
         myTank.draw(g);
     }
 
