@@ -4,8 +4,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Tank {
-    public static final int XSPEED=5;           //定义坦克移动速度
-    public static final int YSPEED=5;
+    public static final int XSPEED=40;           //定义坦克移动速度
+    public static final int YSPEED=40;
 
     public static final int WIDTH=30;           //定义坦克大小
     public static final int HEIGHT=30;
@@ -109,6 +109,12 @@ public class Tank {
         if(this.dir!=Direction.STOP){
             this.ptDir=this.dir;
         }
+
+        if(x<10){ x=10;}              //定义坦克的活动范围，解决坦克出界的问题
+        if(y<50){ y=50;}
+        if(x+Tank.WIDTH>TankClient.GAME_WIDTH){x=TankClient.GAME_WIDTH-Tank.WIDTH-10;}
+        if(y+Tank.HEIGHT>TankClient.GAME_HEIGNT){y=TankClient.GAME_HEIGNT-Tank.HEIGHT-10;}
+
     }
 
     public void keyPressed(KeyEvent e){        //处理键盘按下时指令
