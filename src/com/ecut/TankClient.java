@@ -2,6 +2,9 @@ package com.ecut;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class TankClient extends Frame{
 
@@ -9,13 +12,20 @@ public class TankClient extends Frame{
     public static final int GAME_HEIGNT=800;
 
     Tank myTank= new Tank(50,50,this);
-    Missile m =null;
+    List<Missile> missiles=new ArrayList<>();
 
     Image offScreenImage = null;
 
 
     public void paint(Graphics g) {            //重写Paint方法画出自己的坦克
-        if(m!=null) m.draw(g);
+        g.drawString("missiles count:"+missiles.size(),10,45);        //显示存在炮弹的数量
+
+        for(int i=0;i<missiles.size();i++){
+            Missile m=missiles.get(i);
+            m.draw(g);
+            //if(!m.isLive())missiles.remove(m);
+            //else m.draw(g);
+        }
         myTank.draw(g);
     }
 

@@ -12,11 +12,22 @@ public class Missile {            //炮弹类
     private int x,y;
     Tank.Direction dir;
 
+    private boolean Live=true;           //炮弹是否存在
+
+    private TankClient tc;
+
+
     public Missile(int x, int y, Tank.Direction dir) {
         this.x = x;
         this.y = y;
         this.dir = dir;
     }
+
+    public Missile(int x,int y,Tank.Direction dir,TankClient tc){
+        this(x,y,dir);
+        this.tc=tc;
+    }
+
     public void draw(Graphics g){
         Color c =g.getColor();
         g.setColor(Color.BLACK);
@@ -58,6 +69,13 @@ public class Missile {            //炮弹类
             case STOP:
                 break;
         }
+        if(x<0||y<0||x>TankClient.GAME_WIDTH||y>TankClient.GAME_HEIGNT){
+            Live=false;
+            tc.missiles.remove(this);
+        }
     }
 
+    public boolean isLive() {
+        return Live;
+    }
 }
