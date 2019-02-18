@@ -3,8 +3,8 @@ package com.ecut;
 import java.awt.*;
 
 public class Missile {            //炮弹类
-    public static final int XSPEED=10;
-    public static final int YSPEED=10;
+    public static final int XSPEED=20;
+    public static final int YSPEED=20;
 
     public static final int WIDTH=10;
     public static final int HEIGHT=10;
@@ -29,6 +29,10 @@ public class Missile {            //炮弹类
     }
 
     public void draw(Graphics g){
+        if(!Live){
+            tc.missiles.remove(this);
+            return;
+        }
         Color c =g.getColor();
         g.setColor(Color.BLACK);
         g.fillOval(x,y,WIDTH,HEIGHT);
@@ -77,5 +81,20 @@ public class Missile {            //炮弹类
 
     public boolean isLive() {
         return Live;
+    }
+
+    public Rectangle getRect(){               //利用碰撞检测的辅助类Rectangle 拿到子弹的矩形
+        return new Rectangle(x,y,WIDTH,HEIGHT);
+    }
+
+    public boolean hitTank(Tank t){     //判断子弹是否打到坦克（碰撞检测）
+        if(this.getRect().intersects(t.getRect())&&t.isLive()) {
+            t.setLive(false);
+            this.Live=false;
+            Explode e=new Explode(x,y,tc);
+            tc.explodes.add(e);
+            return true;
+        }
+        return false;
     }
 }

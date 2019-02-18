@@ -4,13 +4,17 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Tank {
-    public static final int XSPEED=40;           //定义坦克移动速度
-    public static final int YSPEED=40;
+    public static final int XSPEED=10;           //定义坦克移动速度
+    public static final int YSPEED=10;
 
     public static final int WIDTH=30;           //定义坦克大小
     public static final int HEIGHT=30;
 
+    private boolean live=true;   //判断坦克的死活
+
     TankClient tc;
+
+    private boolean good;
 
     private int x, y;
 
@@ -23,19 +27,23 @@ public class Tank {
     private Direction dir=Direction.STOP;
     private Direction ptDir=Direction.D;         //炮筒
 
-    public Tank(int x, int y){
+    public Tank(int x, int y,boolean good){
         this.x=x;
         this.y=y;
+        this.good=good;
     }
 
-    public  Tank(int x,int y,TankClient tc){
-        this(x,y);
+    public  Tank(int x,int y,boolean good,TankClient tc){
+        this(x,y,good);
         this.tc=tc;
     }
 
     public void draw(Graphics g){                    //画笔，画出自己的坦克
+        if(!live) return;
+
         Color c = g.getColor();
-        g.setColor(Color.RED);
+        if(good) {g.setColor(Color.RED);}
+        else {g.setColor(Color.white);}
         g.fillOval(x,y,WIDTH,HEIGHT);
         g.setColor(c);
 
@@ -112,8 +120,8 @@ public class Tank {
 
         if(x<10){ x=10;}              //定义坦克的活动范围，解决坦克出界的问题
         if(y<50){ y=50;}
-        if(x+Tank.WIDTH>TankClient.GAME_WIDTH){x=TankClient.GAME_WIDTH-Tank.WIDTH-10;}
-        if(y+Tank.HEIGHT>TankClient.GAME_HEIGNT){y=TankClient.GAME_HEIGNT-Tank.HEIGHT-10;}
+        if(x+(Tank.WIDTH+10)>TankClient.GAME_WIDTH){x=TankClient.GAME_WIDTH-Tank.WIDTH-10;}
+        if(y+(Tank.HEIGHT+10)>TankClient.GAME_HEIGNT){y=TankClient.GAME_HEIGNT-Tank.HEIGHT-10;}
 
     }
 
@@ -142,6 +150,18 @@ public class Tank {
         Missile m=new Missile(x,y,ptDir,this.tc);
         tc.missiles.add(m);
         return m;
+    }
+
+    public Rectangle getRect(){               //拿到坦克的矩形
+        return new Rectangle(x,y,WIDTH,HEIGHT);
+    }
+
+    public boolean isLive() {
+        return live;
+    }
+
+    public void setLive(boolean live) {
+        this.live = live;
     }
 
     public void keyReleased(KeyEvent e){       //处理键盘抬起时的指令

@@ -11,22 +11,33 @@ public class TankClient extends Frame{
     public static final int GAME_WIDTH=1200;         //将游戏窗口的宽度和高度定义为常量，方便修改窗口大小
     public static final int GAME_HEIGNT=800;
 
-    Tank myTank= new Tank(50,50,this);
-    List<Missile> missiles=new ArrayList<>();
+    Tank myTank= new Tank(50,50,true,this);    //创建自己的好坦克
+    Tank enemyTank=new Tank(100,100,false,this);         //创建敌方的坏坦克
+
+    List<Explode> explodes=new ArrayList<Explode>();
+    List<Missile> missiles=new ArrayList<Missile>();
 
     Image offScreenImage = null;
 
 
     public void paint(Graphics g) {            //重写Paint方法画出自己的坦克
-        g.drawString("missiles count:"+missiles.size(),10,45);        //显示存在炮弹的数量
+        g.drawString("子弹数量:"+missiles.size(),10,45);        //显示存在炮弹的数量
+        g.drawString("爆炸数量:"+explodes.size(),150,45);       //显示产生爆炸的数量
 
         for(int i=0;i<missiles.size();i++){
             Missile m=missiles.get(i);
+            m.hitTank(enemyTank);
             m.draw(g);
             //if(!m.isLive())missiles.remove(m);
             //else m.draw(g);
         }
+        for(int i=0;i<explodes.size();i++){
+            Explode e=explodes.get(i);
+            e.draw(g);
+        }
+
         myTank.draw(g);
+        enemyTank.draw(g);
     }
 
     public void update(Graphics g){
