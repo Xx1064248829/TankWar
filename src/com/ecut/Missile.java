@@ -13,6 +13,7 @@ public class Missile {            //炮弹类
     private int x,y;
     Tank.Direction dir;
 
+    private boolean good;
     private boolean Live=true;           //炮弹是否存在
 
     private TankClient tc;
@@ -24,8 +25,9 @@ public class Missile {            //炮弹类
         this.dir = dir;
     }
 
-    public Missile(int x,int y,Tank.Direction dir,TankClient tc){
+    public Missile(int x,int y,boolean good,Tank.Direction dir,TankClient tc){
         this(x,y,dir);
+        this.good=good;
         this.tc=tc;
     }
 
@@ -89,7 +91,7 @@ public class Missile {            //炮弹类
     }
 
     public boolean hitTank(Tank t){     //判断子弹是否打到坦克（碰撞检测）
-        if(this.getRect().intersects(t.getRect())&&t.isLive()) {
+        if(this.isLive()&&this.getRect().intersects(t.getRect())&&t.isLive()&&this.good!=t.isGood()) {
             t.setLive(false);
             this.Live=false;
             Explode e=new Explode(x,y,tc);

@@ -32,6 +32,14 @@ public class Tank {
 
     private int step=r.nextInt(12)+3;               //创建一个变量记录坏坦克移动的步数
 
+    public boolean isGood() {
+        return good;
+    }
+
+    public void setGood(boolean good) {
+        this.good = good;
+    }
+
     public Tank(int x, int y,boolean good){
         this.x=x;
         this.y=y;
@@ -142,6 +150,10 @@ public class Tank {
                 dir=dirs[rn];
             }
             step --;
+
+            if(r.nextInt(40)>38){
+                this.fire();
+            }
         }
     }
 
@@ -165,9 +177,10 @@ public class Tank {
     }
 
     public Missile fire(){                 //处理开火时炮弹的轨迹
+        if(!live)return null;
         int x= this.x+Tank.WIDTH/2-Missile.WIDTH/2;
         int y= this.y+Tank.HEIGHT/2-Missile.HEIGHT/2;
-        Missile m=new Missile(x,y,ptDir,this.tc);
+        Missile m=new Missile(x,y,good,ptDir,this.tc);
         tc.missiles.add(m);
         return m;
     }

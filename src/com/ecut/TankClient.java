@@ -16,8 +16,6 @@ public class TankClient extends Frame{
     List<Explode> explodes=new ArrayList<Explode>();            //保存爆炸数量
     List<Missile> missiles=new ArrayList<Missile>();            //保存子弹数量
     List<Tank> tanks=new ArrayList<Tank>();                     //保存坦克数量
-
-
     Image offScreenImage = null;
 
 
@@ -29,6 +27,7 @@ public class TankClient extends Frame{
         for(int i=0;i<missiles.size();i++){
             Missile m=missiles.get(i);
             m.hitTanks(tanks);
+            m.hitTank(myTank);
             m.draw(g);
             //if(!m.isLive())missiles.remove(m);
             //else m.draw(g);
