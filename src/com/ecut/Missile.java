@@ -1,6 +1,7 @@
 package com.ecut;
 
 import java.awt.*;
+import java.util.List;
 
 public class Missile {            //炮弹类
     public static final int XSPEED=20;
@@ -94,6 +95,15 @@ public class Missile {            //炮弹类
             Explode e=new Explode(x,y,tc);
             tc.explodes.add(e);
             return true;
+        }
+        return false;
+    }
+
+    public boolean hitTanks(List<Tank> tanks){
+        for(int i=0;i<tanks.size();i++){
+            if(hitTank(tanks.get(i))){
+                return true;
+            }
         }
         return false;
     }

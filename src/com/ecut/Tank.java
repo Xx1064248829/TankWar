@@ -2,6 +2,7 @@ package com.ecut;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.*;
 
 public class Tank {
     public static final int XSPEED=10;           //定义坦克移动速度
@@ -18,6 +19,8 @@ public class Tank {
 
     private int x, y;
 
+    private static Random r=new Random();        //创建一个静态的随机数产生器
+
     private boolean bL=false,bU=false,bR=false,bD=false;
 
     enum Direction {                              //定义 一个枚举类型
@@ -27,19 +30,27 @@ public class Tank {
     private Direction dir=Direction.STOP;
     private Direction ptDir=Direction.D;         //炮筒
 
+    private int step=r.nextInt(12)+3;               //创建一个变量记录坏坦克移动的步数
+
     public Tank(int x, int y,boolean good){
         this.x=x;
         this.y=y;
         this.good=good;
     }
 
-    public  Tank(int x,int y,boolean good,TankClient tc){
+    public  Tank(int x,int y,boolean good,Direction dir,TankClient tc){
         this(x,y,good);
+        this.dir=dir;
         this.tc=tc;
     }
 
     public void draw(Graphics g){                    //画笔，画出自己的坦克
-        if(!live) return;
+        if(!live){
+            if(!good){
+                tc.tanks.remove(this);
+            }
+            return;
+        }
 
         Color c = g.getColor();
         if(good) {g.setColor(Color.RED);}
@@ -123,6 +134,15 @@ public class Tank {
         if(x+(Tank.WIDTH+10)>TankClient.GAME_WIDTH){x=TankClient.GAME_WIDTH-Tank.WIDTH-10;}
         if(y+(Tank.HEIGHT+10)>TankClient.GAME_HEIGNT){y=TankClient.GAME_HEIGNT-Tank.HEIGHT-10;}
 
+        if(!good){
+            Direction[] dirs=Direction.values();                 //创建数组
+            if(step==0){
+                step=r.nextInt(12)+3;
+                int rn=r.nextInt(dirs.length);                       //随机创建一个dirs数组范围内的值
+                dir=dirs[rn];
+            }
+            step --;
+        }
     }
 
     public void keyPressed(KeyEvent e){        //处理键盘按下时指令
