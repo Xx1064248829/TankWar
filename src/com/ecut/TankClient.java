@@ -24,11 +24,18 @@ public class TankClient extends Frame{
 
     public void paint(Graphics g) {            //重写Paint方法画出自己的坦克
         g.drawString("子弹数量:"+missiles.size(),10,45);        //显示存在炮弹的数量
-        g.drawString("爆炸数量:"+explodes.size(),150,45);       //显示产生爆炸的数量
-        g.drawString("坦克数量:"+tanks.size(),290,45);          //显示产生坦克的数量
+        g.drawString("剩余坦克数量:"+tanks.size(),150,45);          //显示产生坦克的数量
+        g.drawString("主坦克复活:F2",290,45);
         g.drawString("开火键：空格",430,45);
         g.drawString("全向开火：Z",570,45);
         g.drawString("主坦克血量:"+myTank.getLife(),710,45);          //显示坦克的血量
+
+
+        if(tanks.size()<=0){
+            for(int i=0;i<5;i++){
+                tanks.add(new Tank(50+40*(i+1),50,false,Tank.Direction.D,this));
+            }
+        }
 
         for(int i=0;i<missiles.size();i++){
             Missile m=missiles.get(i);
