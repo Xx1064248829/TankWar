@@ -92,7 +92,13 @@ public class Missile {            //炮弹类
 
     public boolean hitTank(Tank t){     //判断子弹是否打到坦克（碰撞检测）
         if(this.isLive()&&this.getRect().intersects(t.getRect())&&t.isLive()&&this.good!=t.isGood()) {
-            t.setLive(false);
+            if(t.isGood()) {
+                t.setLife(t.getLife() - 25);
+                if (t.getLife() <= 0) t.setLive(false);
+            }
+            else { t.setLive(false); }
+
+
             this.Live=false;
             Explode e=new Explode(x,y,tc);
             tc.explodes.add(e);
@@ -106,6 +112,14 @@ public class Missile {            //炮弹类
             if(hitTank(tanks.get(i))){
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean hitWall(Wall w){
+        if(this.Live && this.getRect().intersects(w.getRect())){
+            this.Live=false;
+            return true;
         }
         return false;
     }

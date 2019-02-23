@@ -2,7 +2,6 @@ package com.ecut;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -13,21 +12,30 @@ public class TankClient extends Frame{
 
     Tank myTank= new Tank(50,50,true,Tank.Direction.STOP,this);    //创建自己的好坦克
 
+    Wall w1=new Wall(500,300,20,150,this);
+    Wall w2=new Wall(700,100,200,20,this);
+
     List<Explode> explodes=new ArrayList<Explode>();            //保存爆炸数量
     List<Missile> missiles=new ArrayList<Missile>();            //保存子弹数量
     List<Tank> tanks=new ArrayList<Tank>();                     //保存坦克数量
     Image offScreenImage = null;
 
+    Blood b=new Blood();
 
     public void paint(Graphics g) {            //重写Paint方法画出自己的坦克
         g.drawString("子弹数量:"+missiles.size(),10,45);        //显示存在炮弹的数量
         g.drawString("爆炸数量:"+explodes.size(),150,45);       //显示产生爆炸的数量
         g.drawString("坦克数量:"+tanks.size(),290,45);          //显示产生坦克的数量
+        g.drawString("开火键：空格",430,45);
+        g.drawString("全向开火：Z",570,45);
+        g.drawString("主坦克血量:"+myTank.getLife(),710,45);          //显示坦克的血量
 
         for(int i=0;i<missiles.size();i++){
             Missile m=missiles.get(i);
             m.hitTanks(tanks);
             m.hitTank(myTank);
+            m.hitWall(w1);
+            m.hitWall(w2);
             m.draw(g);
             //if(!m.isLive())missiles.remove(m);
             //else m.draw(g);
@@ -38,10 +46,17 @@ public class TankClient extends Frame{
         }
         for(int i=0;i<tanks.size();i++){
             Tank t=tanks.get(i);
+            t.collidesWithWall(w1);
+            t.collidesWithWall(w2);
+            t.collidesWithTanks(tanks);
             t.draw(g);
         }
 
         myTank.draw(g);
+        myTank.eat(b);
+        w1.draw(g);
+        w2.draw(g);
+        b.draw(g);
 
     }
 
