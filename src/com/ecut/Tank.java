@@ -294,6 +294,8 @@ public class Tank {
         else if(!bL && !bU && !bR && !bD)  dir =Direction.STOP;
     }
 
+    
+
     public boolean collidesWithWall(Wall w){
         if(this.live && this.getRect().intersects(w.getRect())){
             this.stay();
