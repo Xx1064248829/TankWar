@@ -27,7 +27,9 @@ public class Blood {     //血块类
     }
 
     public void draw(Graphics g){
-        if(!live)return;
+        if(!live) {
+            return;
+        }
         Color c=g.getColor();
         g.setColor(Color.pink);
         g.fillRect(x,y,w,h);

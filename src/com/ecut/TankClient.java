@@ -22,6 +22,7 @@ public class TankClient extends Frame{
 
     Blood b=new Blood();
 
+    @Override
     public void paint(Graphics g) {            //重写Paint方法画出自己的坦克
         g.drawString("子弹数量:"+missiles.size(),10,45);        //显示存在炮弹的数量
         g.drawString("剩余坦克数量:"+tanks.size(),150,45);          //显示产生坦克的数量
@@ -67,6 +68,7 @@ public class TankClient extends Frame{
 
     }
 
+    @Override
     public void update(Graphics g){
         if(offScreenImage == null){
             offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGNT);
@@ -112,6 +114,7 @@ public class TankClient extends Frame{
 
     private class PaintThread implements Runnable{
 
+        @Override
         public void run() {
             while(true){
                 repaint();           //调用父类的repaint()方法进行重画
@@ -125,9 +128,11 @@ public class TankClient extends Frame{
     }
 
     private class KeyMonitor extends KeyAdapter{            //添加键盘的监听器
+        @Override
         public void keyPressed(KeyEvent e) {
             myTank.keyPressed(e);
         }
+        @Override
         public void keyReleased(KeyEvent e) {
             myTank.keyReleased(e);
         }

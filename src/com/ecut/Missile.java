@@ -94,7 +94,9 @@ public class Missile {            //炮弹类
         if(this.isLive()&&this.getRect().intersects(t.getRect())&&t.isLive()&&this.good!=t.isGood()) {
             if(t.isGood()) {
                 t.setLife(t.getLife() - 25);
-                if (t.getLife() <= 0) t.setLive(false);
+                if (t.getLife() <= 0) {
+                    t.setLive(false);
+                }
             }
             else { t.setLive(false); }
 

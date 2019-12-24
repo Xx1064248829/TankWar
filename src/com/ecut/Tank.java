@@ -81,8 +81,9 @@ public class Tank {
         else {g.setColor(Color.white);}
         g.fillOval(x,y,WIDTH,HEIGHT);
         g.setColor(c);
-        if(good)
-        bb.draw(g);
+        if(good) {
+            bb.draw(g);
+        }
 
         switch (ptDir){                   //画出坦克八个方向的炮筒朝向
             case L:
@@ -283,15 +284,25 @@ public class Tank {
     }
 
     void locateDirection(){                  //为坦克移动定向
-        if(bL && !bU && !bR && !bD)  dir =Direction.L;
-        else if(bL &&  bU && !bR && !bD)  dir =Direction.LU;
-        else if(bL && !bU && !bR &&  bD)  dir =Direction.LD;
-        else if(!bL && !bU && bR && !bD)  dir =Direction.R;
-        else if(!bL &&  bU && bR && !bD)  dir =Direction.RU;
-        else if(!bL && !bU && bR &&  bD)  dir =Direction.RD;
-        else if(!bL && bU && !bR && !bD)  dir =Direction.U;
-        else if(!bL && !bU && !bR && bD)  dir =Direction.D;
-        else if(!bL && !bU && !bR && !bD)  dir =Direction.STOP;
+        if(bL && !bU && !bR && !bD) {
+            dir =Direction.L;
+        } else if(bL &&  bU && !bR && !bD) {
+            dir =Direction.LU;
+        } else if(bL && !bU && !bR &&  bD) {
+            dir =Direction.LD;
+        } else if(!bL && !bU && bR && !bD) {
+            dir =Direction.R;
+        } else if(!bL &&  bU && bR && !bD) {
+            dir =Direction.RU;
+        } else if(!bL && !bU && bR &&  bD) {
+            dir =Direction.RD;
+        } else if(!bL && bU && !bR && !bD) {
+            dir =Direction.U;
+        } else if(!bL && !bU && !bR && bD) {
+            dir =Direction.D;
+        } else if(!bL && !bU && !bR && !bD) {
+            dir =Direction.STOP;
+        }
     }
 
     
